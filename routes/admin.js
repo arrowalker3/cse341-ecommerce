@@ -16,7 +16,12 @@ router.get('/add-product', (req, res, next) => {
 });
 
 router.post('/add-product', (req, res, next) => {
-    products.push({title: req.body.title});
+    products.push({
+        title: req.body.title,
+        price: req.body.price,
+        description: req.body.description,
+        rating: req.body.rating
+    });
     res.redirect('/');
 });
 
