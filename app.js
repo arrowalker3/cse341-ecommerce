@@ -7,17 +7,37 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const cors = require('cors') // Place this with other requires (like 'path' and 'express')
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
-const uriObj = require('./util/uri');
-const MONGODB_URI = uriObj.uri;
+const corsOptions = {
+    origin: "https://cse341-walker-ecommerce.herokuapp.com/",
+    optionsSuccessStatus: 200
+};
+
 const PORT = process.env.PORT || 3000; // So we can run on heroku || (OR) localhost:5000
 
 const app = express();
+
+// *********** Mongo and Heroku stuff ***********
+app.use(cors(corsOptions));
+
+const options = {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    family: 4
+};
+
+const uriObj = require('./util/uri');
+const MONGODB_URL = process.env.MONGODB_URL || uriObj.uri;
+// *********** End of Mongo and Heroku stuff ***********
+
 const store = new MongoDBStore({
-    uri: MONGODB_URI,
+    uri: MONGODB_URL,
     collection: 'ecommerce-sessions'
 });
 const csrfProtection = csrf();
@@ -75,7 +95,7 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
-    .connect(MONGODB_URI)
+    .connect(MONGODB_URL)
     .then( result => {
         app.listen(PORT);
     })
