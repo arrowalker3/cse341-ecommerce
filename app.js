@@ -32,7 +32,7 @@ const options = {
     family: 4
 };
 
-const uriObj = require('./util/uri');
+const uriObj = require('./util/url');
 const MONGODB_URL = process.env.MONGODB_URL || uriObj.uri;
 // *********** End of Mongo and Heroku stuff ***********
 
