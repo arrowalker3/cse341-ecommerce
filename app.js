@@ -32,8 +32,8 @@ const options = {
     family: 4
 };
 
-const uriObj = require('./util/url');
-const MONGODB_URL = process.env.MONGODB_URL || uriObj.uri;
+// const uriObj = require('./util/url');
+const MONGODB_URL = process.env.MONGODB_URL || require('./util/url').uri;
 // *********** End of Mongo and Heroku stuff ***********
 
 const store = new MongoDBStore({
