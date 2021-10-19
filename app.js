@@ -8,6 +8,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const cors = require('cors') // Place this with other requires (like 'path' and 'express')
+const dotenv = require('dotenv');
+dotenv.config();
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
